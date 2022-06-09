@@ -1,0 +1,5 @@
+# 학습하기 위한 명령어
+python3 train.py --gradient_clip_val 1.0 --max_epochs 50 --default_root_dir logs  --gpus 1 --batch_size 4 --train_file 'train-1.csv' --test_file
+
+# 추론(실제 적용)하기 전에 처리해야 하는 작업을 위한 명령어
+python get_model_binary.py --hparams ./logs/tb_logs/default/version_0/hparams.yaml  --model_binary ./logs/kobart_translation-model_chp/epoch=02-val_loss=0.803.ckpt
