@@ -354,7 +354,6 @@ class Rouge:
         if has_rouge_w_metric:
             scores.update(self._get_scores_rouge_l_or_w(hypothesis, references, True))
             # scores = {**scores, **self._get_scores_rouge_l_or_w(hypothesis, references, True)}
-            \
 
         return scores
 
