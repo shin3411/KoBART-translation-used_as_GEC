@@ -1,5 +1,12 @@
+아래 명령어들은 사실 파이썬 내장함수인 argparse를 이용했기에,
+그냥 python3 ~.py -h 로 명령어 치면 어떤 인자 명령어를 사용해야 하는지 잘 나와있다.
+명령어 적은 이유는 그냥 빠르게 복붙해서 명령어칠 수 있도록 아래에 따로 적어둔 것이다. 
+
 # 학습하기 위한 명령어
 python3 train.py --gradient_clip_val 1.0 --max_epochs 30 --default_root_dir logs  --gpus 1 --batch_size 4 --train_file 'train2-1.csv' --test_file 'test2-1.csv'
 
 # 추론(실제 적용)하기 전에 처리해야 하는 작업을 위한 명령어
-python get_model_binary.py --hparams ./logs/tb_logs/default/version_0/hparams.yaml  --model_binary ./logs/kobart_translation-model_chp/epoch=02-val_loss=0.803.ckpt
+python3 get_model_binary.py --hparams ./logs/tb_logs/default/version_0/hparams.yaml  --model_binary ./logs/kobart_translation-model_chp/epoch=02-val_loss=0.803.ckpt
+
+# infer_csv.py 실행을 위한 명령어
+python3 infer_csv.py --test_csv_path ./test2-1.csv --infered_test_csv_path ./test2-2.csv
