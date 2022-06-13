@@ -27,6 +27,9 @@ def inference_one_text(text):
 test_df = pd.read_csv('./test-1.csv', index_col=0)
 test_df['infer'] = test_df['input'].apply(inference_one_text)
 
+print(test_df.head())
+test_df.to_csv('./test-2.csv')
+
 labels = []    # 실제 labels
 guesses = []    # 에측된 결과
 
@@ -35,10 +38,10 @@ for index, row in test_df.iterrows():
     guesses.append(row['infer'])
 
 acc = accuracy_score(labels, guesses)
-recall = recall_score(labels, guesses)
-precision = precision_score(labels, guesses)
-f1 = f1_score(labels, guesses)
-f0p5 = fbeta_score(labels, guesses, beta=0.5)
+recall = recall_score(labels, guesses, average='micro')
+precision = precision_score(labels, guesses, average='micro')
+f1 = f1_score(labels, guesses, average='micro')
+f0p5 = fbeta_score(labels, guesses, beta=0.5, average='micro')
 print(acc)
 print(recall)    # 0.42
 print(precision)     # 0.5

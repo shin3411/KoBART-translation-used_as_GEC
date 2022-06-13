@@ -6,3 +6,4 @@ transformers==4.0.0
 pytorch-lightning==1.1.0
 streamlit==0.72.0
 pyyaml==5.4.1
+scikit-learn==1.0
