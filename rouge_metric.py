@@ -18,7 +18,9 @@ class Rouge:
     AVAILABLE_LENGTH_LIMIT_TYPES = {"words", "bytes"}
     REMOVE_CHAR_PATTERN = re.compile("[^A-Za-z0-9가-힣]")
 
-
+    # metrics = ["rouge-n", "rouge-l", "rouge-w"] 과 같은 **리스트** 형태를 넣어주어야 한다!
+    # metrics = None 이면!! 반드시 max_n = 3 과 같은 **숫자** 형태를 넣어주어야 한다!
+    # => 그러면, "rouge-1" , "rouge-2", "rouge-3" 이 생기는데 여기서 숫자의 의미는 Rouge._compute_ngrams(hypothesis, reference, n) 에 넣어줄 n을 의미한다.
     def __init__(
         self,
         metrics=None,
@@ -333,6 +335,7 @@ class Rouge:
         if has_rouge_n_metric:
             scores.update(self._get_scores_rouge_n(hypothesis, references))
             # scores = {**scores, **self._get_scores_rouge_n(hypothesis, references)}
+            print(scores)
 
 
         has_rouge_l_metric = (
@@ -341,7 +344,7 @@ class Rouge:
         if has_rouge_l_metric:
             scores.update(self._get_scores_rouge_l_or_w(hypothesis, references, False))
             # scores = {**scores, **self._get_scores_rouge_l_or_w(hypothesis, references, False)}
-
+            print(scores)
 
         has_rouge_w_metric = (
             len([metric for metric in self.metrics if metric.split("-")[-1].lower() == "w"]) > 0
@@ -349,7 +352,7 @@ class Rouge:
         if has_rouge_w_metric:
             scores.update(self._get_scores_rouge_l_or_w(hypothesis, references, True))
             # scores = {**scores, **self._get_scores_rouge_l_or_w(hypothesis, references, True)}
-
+            print(scores)
 
         return scores
 

@@ -51,7 +51,7 @@ for index, row in test_df.iterrows():
     labels.append(row['output'])
     guesses.append(row['infer'])
 
-rouge = Rouge()
+rouge = Rouge(metrics=["rouge-n", "rouge-l", "rouge-w"], max_n=3)
 scores = rouge.get_scores(guesses, labels)
 print(type(scores))
 print(scores)
