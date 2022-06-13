@@ -330,12 +330,14 @@ class Rouge:
             raise ValueError("'hyps' and 'refs' do not have the same length")
         scores = {}
         has_rouge_n_metric = (
-            len([metric for metric in self.metrics if metric.split("-")[-1].isdigit()]) > 0
+            # 문자열.isdigit()은 문자열이 숫자로 구성되어 있는지 판별해주는 함수(True or False)
+            # 단, 음수나 소수점이 있을 경우, 숫자임에도 False 반환
+            len([metric for metric in self.metrics if metric.split("-")[-1].isdigit()]) > 0 
         )
         if has_rouge_n_metric:
             scores.update(self._get_scores_rouge_n(hypothesis, references))
             # scores = {**scores, **self._get_scores_rouge_n(hypothesis, references)}
-            print(scores)
+            
 
 
         has_rouge_l_metric = (
@@ -344,7 +346,7 @@ class Rouge:
         if has_rouge_l_metric:
             scores.update(self._get_scores_rouge_l_or_w(hypothesis, references, False))
             # scores = {**scores, **self._get_scores_rouge_l_or_w(hypothesis, references, False)}
-            print(scores)
+            
 
         has_rouge_w_metric = (
             len([metric for metric in self.metrics if metric.split("-")[-1].lower() == "w"]) > 0
@@ -352,7 +354,7 @@ class Rouge:
         if has_rouge_w_metric:
             scores.update(self._get_scores_rouge_l_or_w(hypothesis, references, True))
             # scores = {**scores, **self._get_scores_rouge_l_or_w(hypothesis, references, True)}
-            print(scores)
+            \
 
         return scores
 
