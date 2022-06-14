@@ -13,8 +13,8 @@ parser = argparse.ArgumentParser(
     description='학습된 모델 파라미터를 불러올 pytorch_model.bin 폴더경로, test csv와 예측한 결과 포함된 csv파일경로 지정')
 # 인자값 등록
 parser.add_argument('--model_path', required=False, default='./kobart_binary', help='pytorch_model.bin 파일이 있는 폴더경로')
-parser.add_argumenr('--test_csv_path', required=True, help='예측할 test csv 파일 경로')
-parser.add_argumenr('--infered_test_csv_path', required=True, help='예측 결과 포함될 test csv 파일 경로')
+parser.add_argument('--test_csv_path', required=True, help='예측할 test csv 파일 경로')
+parser.add_argument('--infered_test_csv_path', required=True, help='예측 결과 포함될 test csv 파일 경로')
 # 등록된 인자값을 args에 저장 (type: namespace)
 args = parser.parse_args()
 
