@@ -3,7 +3,7 @@ import argparse
 from flask import Flask
 from flask_restful import Api, Resource
 
-from resources.MyAPI import MyAPI
+from resources import MyAPI
 
 
 class HelloWorld(Resource):
