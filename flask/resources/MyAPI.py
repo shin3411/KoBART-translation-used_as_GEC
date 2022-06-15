@@ -3,7 +3,7 @@ import torch
 from kobart import get_kobart_tokenizer
 from transformers.models.bart import BartForConditionalGeneration
 from resources.custom_errors import WrongMethodError, NoneArgumentError
-
+import os
 
 class MyAPI(Resource):
     def __init__(self, **kwargs):
@@ -14,7 +14,7 @@ class MyAPI(Resource):
         self.model_path = kwargs['model_path']
 
     def get(self):
-        raise WrongMethodError
+        return { 'current_path' : os.getcwd() }
     
     def delete(self):
         raise WrongMethodError
