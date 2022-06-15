@@ -9,7 +9,7 @@ class MyAPI(Resource):
     def __init__(self, **kwargs):
         # Create a request parser
         parser = reqparse.RequestParser()
-        parser.add_argument('sentence', dest='image', type=str)
+        parser.add_argument('TEXT', dest='sentence', type=str) # 첫번째 인자는 Argument 인스턴스의 이름인듯... 사실 뭔지 잘 모르겠다.
         self.args = parser.parse_args(strict=True)
         self.model_path = kwargs['model_path']
 
