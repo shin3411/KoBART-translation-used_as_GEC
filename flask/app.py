@@ -4,11 +4,11 @@ from flask import Flask
 from flask_restful import Api, Resource
 
 from resources.MyAPI import MyAPI
-
+import os
 
 class HelloWorld(Resource):
     def get(self):
-        return {'hello': 'world'}
+        return {'cur_path' : os.path.dirname(os.path.realpath(__file__)) }
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -22,6 +22,7 @@ if __name__ == '__main__':
     api = Api(app)
 
     api.add_resource(HelloWorld, '/')
-    api.add_resource(MyAPI, '/predict', resource_class_kwargs={'model_path': '../../kobart_binary'})
+    api.add_resource(MyAPI, '/predict', resource_class_kwargs={'model_path': os.path.dirname(os.path.realpath(__file__)) + '/../kobart_binary'})
+    
 
     app.run(port=opt.port, debug=opt.debug, threaded=opt.thread, processes=opt.processes)
