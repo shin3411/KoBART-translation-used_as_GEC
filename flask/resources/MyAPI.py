@@ -5,6 +5,8 @@ from transformers.models.bart import BartForConditionalGeneration
 from resources.custom_errors import WrongMethodError, NoneArgumentError
 import os
 
+print(os.getcwd())
+
 class MyAPI(Resource):
     def __init__(self, **kwargs):
         # Create a request parser
