@@ -4,6 +4,7 @@ from flask import Flask
 from flask_restful import Api, Resource
 
 from resources.MyAPI import MyAPI
+from resources.TestAPI import TEST
 import os
 
 class HelloWorld(Resource):
@@ -22,6 +23,7 @@ if __name__ == '__main__':
     api = Api(app)
 
     api.add_resource(HelloWorld, '/')
+    api.add_resource(TEST, '/test')
     api.add_resource(MyAPI, '/predict', resource_class_kwargs={'model_path': os.path.dirname(os.path.realpath(__file__)) + '/../kobart_binary'})
     
 
