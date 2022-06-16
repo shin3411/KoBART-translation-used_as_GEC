@@ -7,6 +7,7 @@ import argparse
 from rouge_metric import Rouge
 from pprint import pprint
 import json
+from nltk.translate.bleu_score import sentence_bleu
 
 # 인자값 받을 인스턴스 생성
 parser = argparse.ArgumentParser(
@@ -49,12 +50,18 @@ test_df = pd.read_csv(args.infered_test_csv_path)
 labels = []    # 실제 labels
 guesses = []    # 에측된 결과
 
+bleu_sum = 0
+num_sen = 0
 for index, row in test_df.iterrows():
     labels.append(row['output'])
     guesses.append(row['infer'])
+    bleu_sum += sentence_bleu([row['output'].split()], row['infer'].split(), weights=(0.25, 0.25, 0.25, 0.25))
+bleu_mean = bleu_sum / num_sen
 
 rouge = Rouge(metrics=["rouge-n", "rouge-l", "rouge-w"], max_n=3)
 scores = rouge.get_scores(guesses, labels)
+scores.update({'bleu_mean': bleu_mean})
+print('bleu_mean', bleu_mean)
 pprint(scores)
 
 with open("score.json", mode="w", encoding="utf-8") as file_object:
