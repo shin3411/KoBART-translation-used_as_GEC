@@ -32,29 +32,36 @@ message_fields = AIpredict.model('msg', {
 
 @AIpredict.route('')
 class AIapi(Resource):
-    def __init__(self):
-        # Create a request parser
-        parser = reqparse.RequestParser()
-        parser.add_argument('TEXT', dest='sentence', type=str, help='input sentence on the model') # 첫번째 인자는 Argument 인스턴스의 이름인듯... 사실 뭔지 잘 모르겠다.
-        self.args = parser.parse_args(strict=True) # 정의되지 않은 인수 포함 시 400 Error 발생
-
+    
     @AIpredict.response(200, 'Success', message_fields)
     @AIpredict.response(500, 'Failed')
     def get(self):
-        return { 'message' : '"/predict" endpoint에 대한 api입니다.', 'current_path' : os.getcwd() }, 200
+        """단순 /predict endpoint 접속 확인용입니다."""
+        return { 'message' : '/predict endpoint에 대한 api입니다.', 'current_path' : os.getcwd() }, 200
     
     def delete(self):
+        """구현 불필요, 사용할 수 없습니다."""
         raise WrongMethodError
         
     def put(self):
+        """구현 불필요, 사용할 수 없습니다."""
         raise WrongMethodError
 
     @AIpredict.expect(sen_fields)
     @AIpredict.response(201, 'Success', sen_fields)
     @AIpredict.response(500, 'Failed')
     def post(self):
-        ''' prediction '''
+        ''' 오문장을 넣으면 GEC모델로 생성한 문장을 출력해 줍니다.'''
         try:
+            parser = reqparse.RequestParser()
+
+            # name(첫 인자) – Either a name or a list of option strings, e.g. foo or -f, –foo.
+            # dest – The name of the attribute to be added to the object returned by parse_args().    
+            parser.add_argument('sentence', dest='sentence', type=str, help='input sentence on the model') 
+
+            # 정의되지 않은 인수 포함 시 400 Error 발생
+            self.args = parser.parse_args(strict=True)
+
             sen = self.args.get('sentence', None)
             if sen is None:
                 raise NoneArgumentError
@@ -66,6 +73,7 @@ class AIapi(Resource):
                 input_ids = input_ids.unsqueeze(0)
                 output = model.generate(input_ids, eos_token_id=1,max_length=512, num_beams=5)
                 output = tokenizer.decode(output[0], skip_special_tokens=True)
+                return output
             
             return { 'sentence' : inference_one_text(sen) }, 201
         except Exception as e:
