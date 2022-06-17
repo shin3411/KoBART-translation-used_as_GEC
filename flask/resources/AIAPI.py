@@ -2,7 +2,7 @@ from flask_restx import Resource, Namespace, fields, reqparse
 import torch
 from kobart import get_kobart_tokenizer
 from transformers.models.bart import BartForConditionalGeneration
-from custom_errors import WrongMethodError, NoneArgumentError
+from resources import WrongMethodError, NoneArgumentError
 import os
 
 model_path = os.path.dirname(os.path.realpath(__file__)) + '/../../kobart_binary'

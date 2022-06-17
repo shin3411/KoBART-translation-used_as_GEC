@@ -1,3 +1,8 @@
+# too big files
+kobart_translation-last.ckpt
+kobart_translation-model_chp/
+kobart_binary/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
