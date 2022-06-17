@@ -27,4 +27,4 @@ if __name__ == '__main__':
     api.add_resource(MyAPI, '/predict', resource_class_kwargs={'model_path': os.path.dirname(os.path.realpath(__file__)) + '/../kobart_binary'})
     
 
-    app.run(port=opt.port, debug=opt.debug, threaded=opt.thread, processes=opt.processes)
+    app.run(port=opt.port, debug=opt.debug, threaded=opt.thread, processes=opt.processes, host='0.0.0.0')

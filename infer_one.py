@@ -20,7 +20,7 @@ def inference_one_text(text):
 from time import time, sleep
 
 org_text = []
-org_text.append("어찌아스까나 넘어저부렀네.")
+org_text.append("내는 한국어 공부 좋아합니다.")
 org_text.append("그눔 참 숙제 날래 잘했드래요.")
 org_text.append("그 아는 오데를 그리 가려고 하노?")
 org_text.append("지그믄 너무 조려서 집에 가고 싶다.")
