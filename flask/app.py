@@ -1,15 +1,11 @@
 # 참고 출처 : https://techandlife.tistory.com/30?category=927699
 import argparse
 from flask import Flask
-from flask_restful import Api, Resource
+from flask_restx import Api, Resource
 
-from resources.MyAPI import MyAPI
-from resources.TestAPI import TEST
+from resources import AIpredict
 import os
 
-class HelloWorld(Resource):
-    def get(self):
-        return {'cur_path' : os.path.dirname(os.path.realpath(__file__)) }
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -20,11 +16,26 @@ if __name__ == '__main__':
     opt = parser.parse_args()
 
     app = Flask(__name__)
-    api = Api(app)
+    '''
+    - version: API Server의 버전을 명시합니다.
+    - title: API Server의 이름을 명시합니다.
+    - description: API Server의 설명을 명시합니다.
+    - terms_url: API Server의 Base Url을 명시합니다.
+    - contact: 제작자 E-Mail 등을 삽입합니다.
+    - license: API Server의 라이센스를 명시 합니다.
+    - license_url: API Server의 라이센스 링크를 명시 합니다.
+    '''
+    api = Api(
+        app,
+        version='0.1',
+        title='GEC_model API Server',
+        description='API Server gets grammatically errored sentence, and outputs corrected sentence.',
+        term_url='/',
+        contact='rladudrhs341@gmail.com',
+        license='MIT'
+        )
 
-    api.add_resource(HelloWorld, '/')
-    api.add_resource(TEST, '/test')
-    api.add_resource(MyAPI, '/predict', resource_class_kwargs={'model_path': os.path.dirname(os.path.realpath(__file__)) + '/../kobart_binary'})
+    api.add_namespace(ns=AIpredict, path='/predict')
     
 
-    app.run(port=opt.port, debug=opt.debug, threaded=opt.thread, processes=opt.processes)
+    app.run(port=opt.port, debug=opt.debug, threaded=opt.thread, processes=opt.processes, host='0.0.0.0')
