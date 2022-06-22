@@ -2,6 +2,8 @@
 kobart_translation-last.ckpt
 kobart_translation-model_chp/
 kobart_binary/
+nli.train.ko.csv
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
