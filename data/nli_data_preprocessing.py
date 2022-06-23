@@ -9,9 +9,10 @@ from g2pk import G2p
 import os
 
 nli_train_csv_path = os.path.dirname(os.path.realpath(__file__)) + "/nli.train.ko.csv"
-nli_complete_train_csv_path = os.path.dirname(os.path.realpath(__file__)) + "/nli.train_compelete.ko.csv"
+nli_complete_train_csv_path_4 = os.path.dirname(os.path.realpath(__file__)) + "/nli.train_compelete.ko_4.csv"
+nli_complete_train_csv_path_5 = os.path.dirname(os.path.realpath(__file__)) + "/nli.train_compelete.ko_5.csv"
+
 print(nli_train_csv_path)
-print(nli_complete_train_csv_path)
 
 random.seed() # 추가
 # random.seed(a=None, version=2)
@@ -1275,14 +1276,30 @@ from tqdm.notebook import tqdm
 
 data_arr = np.empty((0,2),dtype='str')
 
-
-def train_arr_make(data_arr):
-  for i in tqdm(range(200000,nli_train_df.size)):
+for i in tqdm(range(400000,500000)):
     #print(nli_train_df.loc[i,'output'])
     sen = nli_train_df.loc[i,'output']
-    np.append(data_arr, np.array([[noise([sen])[0][0], sen]]), axis=0)
-    np.append(data_arr, np.array([[noise([sen])[0][1], sen]]), axis=0)
+    tup = noise([sen])[0]
+    data_arr = np.append(data_arr, np.array([[tup[0], sen]]), axis=0)
+    data_arr = np.append(data_arr, np.array([[tup[1], sen]]), axis=0)
+    if i % 1000 == 0:
+        print(tup[0], sen)
 
-train_arr_make(data_arr)
 nli_train_df2 = pd.DataFrame(data=data_arr, columns=['input','output'])
-nli_train_df2.to_csv(nli_complete_train_csv_path, index=False)
+nli_train_df2.to_csv(nli_complete_train_csv_path_4, index=False)
+
+print("="*100)
+
+data_arr = np.empty((0,2), dtype='str')
+
+for i in tqdm(range(500000,600000)):
+    #print(nli_train_df.loc[i,'output'])
+    sen = nli_train_df.loc[i,'output']
+    tup = noise([sen])[0]
+    data_arr = np.append(data_arr, np.array([[tup[0], sen]]), axis=0)
+    data_arr = np.append(data_arr, np.array([[tup[1], sen]]), axis=0)
+    if i % 1000 == 0:
+        print(tup[0], sen)
+
+nli_train_df2 = pd.DataFrame(data=data_arr, columns=['input','output'])
+nli_train_df2.to_csv(nli_complete_train_csv_path_5, index=False)
