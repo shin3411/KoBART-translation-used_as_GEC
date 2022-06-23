@@ -1280,8 +1280,10 @@ def train_arr_make(data_arr):
   for i in tqdm(range(200000,nli_train_df.size)):
     #print(nli_train_df.loc[i,'output'])
     sen = nli_train_df.loc[i,'output']
-    np.append(data_arr, np.array([[noise([sen])[0][0], sen]]), axis=0)
-    np.append(data_arr, np.array([[noise([sen])[0][1], sen]]), axis=0)
+    tup =  noise([sen])[0]
+    np.append(data_arr, np.array([[tup[0], sen]]), axis=0)
+    np.append(data_arr, np.array([[tup[1], sen]]), axis=0)
+    print(i, end='    ')
 
 train_arr_make(data_arr)
 nli_train_df2 = pd.DataFrame(data=data_arr, columns=['input','output'])
