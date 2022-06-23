@@ -1278,12 +1278,12 @@ data_arr = np.empty((0,2),dtype='str')
 
 for i in tqdm(range(400000,500000)):
     #print(nli_train_df.loc[i,'output'])
-    sen = nli_train_df.loc[i,'output']
+    sen = str(nli_train_df.loc[i,'output'])
     tup = noise([sen])[0]
     data_arr = np.append(data_arr, np.array([[tup[0], sen]]), axis=0)
     data_arr = np.append(data_arr, np.array([[tup[1], sen]]), axis=0)
     if i % 1000 == 0:
-        print(tup[0], sen)
+        print(i, tup[0], sen)
 
 nli_train_df2 = pd.DataFrame(data=data_arr, columns=['input','output'])
 nli_train_df2.to_csv(nli_complete_train_csv_path_4, index=False)
@@ -1294,12 +1294,12 @@ data_arr = np.empty((0,2), dtype='str')
 
 for i in tqdm(range(500000,600000)):
     #print(nli_train_df.loc[i,'output'])
-    sen = nli_train_df.loc[i,'output']
+    sen = str(nli_train_df.loc[i,'output'])
     tup = noise([sen])[0]
     data_arr = np.append(data_arr, np.array([[tup[0], sen]]), axis=0)
     data_arr = np.append(data_arr, np.array([[tup[1], sen]]), axis=0)
     if i % 1000 == 0:
-        print(tup[0], sen)
+        print(i, tup[0], sen)
 
 nli_train_df2 = pd.DataFrame(data=data_arr, columns=['input','output'])
 nli_train_df2.to_csv(nli_complete_train_csv_path_5, index=False)
